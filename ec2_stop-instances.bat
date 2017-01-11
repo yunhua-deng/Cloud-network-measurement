@@ -1,0 +1,11 @@
+aws ec2 stop-instances --region ap-south-1 --instance-ids i-015ab9e083113bb4e
+aws ec2 stop-instances --region eu-west-1 --instance-ids i-59cb16d2
+aws ec2 stop-instances --region ap-southeast-1 --instance-ids i-82658225
+aws ec2 stop-instances --region ap-southeast-2 --instance-ids i-b50a7337
+aws ec2 stop-instances --region eu-central-1 --instance-ids i-03b1fbbf
+aws ec2 stop-instances --region ap-northeast-2 --instance-ids i-fc09f05a
+aws ec2 stop-instances --region ap-northeast-1 --instance-ids i-e88aa477
+aws ec2 stop-instances --region us-east-1 --instance-ids i-7b84b975
+aws ec2 stop-instances --region sa-east-1 --instance-ids i-0d9508dc
+aws ec2 stop-instances --region us-west-1 --instance-ids i-adec95e8
+aws ec2 stop-instances --region us-west-2 --instance-ids i-1e80268b
