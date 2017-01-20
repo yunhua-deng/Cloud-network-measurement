@@ -7,7 +7,7 @@ Created on Tue Aug  2 19:31:43 2016
 import csv, os
 from sortedcontainers import SortedSet
 
-input_folder = '.\\by_dc\\'
+input_folder = '.\\by_dc\\' # where the data for each source dc is located
 
 common_elements = []
 

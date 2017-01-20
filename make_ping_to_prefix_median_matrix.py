@@ -8,7 +8,7 @@ import csv, os, re
 from sortedcontainers import SortedSet
 import my_module
 
-input_folder = '.\\by_dc\\'
+input_folder = '.\\by_dc\\' # where the data for each source dc is located
 
 # get the list of common prefixes (without any filtering)
 common_elements = []
