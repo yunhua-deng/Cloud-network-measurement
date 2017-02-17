@@ -1,0 +1,1 @@
+for /f %i in (ec2_regions.txt) do (aws s3 cp s3://latency-measurement/%i.ping_to_dc.txt C:\Latency-Dataset\) & for /f %i in (ec2_regions.txt) do (aws s3 cp s3://latency-measurement/%i.ping_to_prefix.zip C:\Latency-Dataset\)

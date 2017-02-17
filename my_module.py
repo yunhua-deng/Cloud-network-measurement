@@ -11,10 +11,10 @@ from collections import defaultdict
 from sortedcontainers import SortedDict
 
 def process_pinginfoview_to_dc_log(log_filename, source_dc_name):
-    with open(log_filename, 'r') as in_file:                
+    with open(source_dc_name + '.' + log_filename, 'r') as in_file:              
         all_pings = defaultdict(list)     
         for row in csv.reader(in_file): # row will be a list, therefore, no need to use list(csv.reader(in_file)) which consumes huge memory                       
-            if row[-1] == 'Succeeded':  
+            if len(row) >= 4 and row[-1] == 'Succeeded':                
                 key = row[1].split('.')[1]
                 if key == 'compute-1': 
                     key = 'us-east-1'
@@ -41,12 +41,12 @@ def process_pinginfoview_to_dc_log(log_filename, source_dc_name):
                     out_file.write(source_dc_name + ',' + key + ',' + str(int(numpy.percentile(value, percentile_rank))) + '\n')          
 
 def process_pinginfoview_to_prefix_log(log_filename, source_dc_name):
-    with open(log_filename, 'r') as in_file:
+    with open(source_dc_name + '.' + log_filename, 'r') as in_file:
         all_pings = defaultdict(list)        
         for row in csv.reader(in_file): # row will be a list, therefore, no need to use list(csv.reader(in_file)) which consumes huge memory
-            if row[-1] == 'Succeeded':              
+            if len(row) >= 4 and row[-1] == 'Succeeded':              
                 all_pings[row[2]].append(int(row[-3])) # row[2] is the ip address, row[-3] is the ping
-        all_pings = SortedDict(all_pings)          
+        all_pings = SortedDict(all_pings)
         
         # the cleaned up file
         with open(source_dc_name + '.' + log_filename.rsplit('.')[0] + '.csv', 'w') as out_file:            

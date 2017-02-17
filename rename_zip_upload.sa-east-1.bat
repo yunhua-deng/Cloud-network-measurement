@@ -1,0 +1,1 @@
+for /l %%g in (1,1,5) do ((for /l %%p in (1,1,6) do (timeout 86400)) & rename ping_to_prefix.txt sa-east-1.ping_to_prefix.week_%%g.txt & 7z a sa-east-1.ping_to_prefix.week_%%g.zip sa-east-1.ping_to_prefix.week_%%g.txt & aws s3 cp sa-east-1.ping_to_prefix.week_%%g.zip s3://latency-measurement/ & aws s3 cp ping_to_dc.txt s3://latency-measurement/sa-east-1.ping_to_dc.txt) 

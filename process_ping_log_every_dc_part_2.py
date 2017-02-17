@@ -9,7 +9,7 @@ import my_module
 import subprocess
 import os
 
-source_dc_name_file_name = 'ec2_regions.txt'
+source_dc_name_file_name = 'ec2_regions_part_2.txt'
 
 # process ping_to_dc
 with open(source_dc_name_file_name, 'r') as source_dc_name_file:

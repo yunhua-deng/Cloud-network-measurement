@@ -1,0 +1,1 @@
+for /f %i in (ec2_regions.txt) do (echo aws s3 cp %i.ping_to_dc.txt s3://latency-measurement/%i.ping_to_dc.txt > upload_final_ping_to_dc.%i.bat)
