@@ -9,7 +9,7 @@ import my_module
 import subprocess
 import os
 
-with open('ec2_regions.txt', 'r') as source_dc_name_file:
+with open('ec2_regions_A.txt', 'r') as source_dc_name_file:
     # process ping_to_dc
     print('processing ping_to_dc: start...\n')    
     for source_dc_name in source_dc_name_file:

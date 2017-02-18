@@ -21,7 +21,7 @@ def process_pinginfoview_to_dc_log(log_filename, source_dc_name):
                 all_pings[key].append(int(row[-3]))
         all_pings = SortedDict(all_pings)
         
-        # the cleaned up file
+        # the cleaned up file (removing unnecessary entries)
         with open(source_dc_name + '.' + log_filename.rsplit('.')[0] + '.csv', 'w') as out_file:            
             for key, value in all_pings.items(): 
                 out_file.write(source_dc_name + ',' + key)
@@ -45,27 +45,31 @@ def process_pinginfoview_to_prefix_log(log_filename, source_dc_name):
         all_pings = defaultdict(list)        
         for row in csv.reader(in_file): # row will be a list, so no need to use list(csv.reader(in_file)) which consumes huge memory
             if len(row) >= 4 and row[-1] == 'Succeeded':              
-                all_pings[row[2]].append(int(row[-3])) # row[2] is the ip address, row[-3] is the ping
+                if len(row[2].split('.')) == 4: # verify ip address
+                    all_pings[row[2]].append(int(row[-3])) # row[2] is the ip address, row[-3] is the ping
         all_pings = SortedDict(all_pings)
         
-        # the cleaned up file
+        # the cleaned up file (removing unnecessary entries)
         with open(source_dc_name + '.' + log_filename.rsplit('.')[0] + '.csv', 'w') as out_file:            
-            for key, value in all_pings.items(): 
-                out_file.write(source_dc_name + ',' + key)
-                for it in value:
-                    out_file.write(',' + str(it))
-                out_file.write('\n')
+            for key, value in all_pings.items(): # key is the ip prefix  
+                if len(value) >= 10: # at least 10 measurements
+                    out_file.write(source_dc_name + ',' + key)
+                    for it in value:
+                        out_file.write(',' + str(it))
+                    out_file.write('\n')
                 
         # the average file
         with open(source_dc_name + '.' + log_filename.rsplit('.')[0] + '_' + 'avg' + '.csv', 'w') as out_file:
             for key, value in all_pings.items():
-                out_file.write(source_dc_name + ',' + key + ',' + str(int(stat.mean(value))) + '\n')
+                if len(value) >= 10: # at least 10 measurements
+                    out_file.write(source_dc_name + ',' + key + ',' + str(int(stat.mean(value))) + '\n')
         
         # the p50 and p90 files
         for percentile_rank in { 50, 90 }:
             with open(source_dc_name + '.' + log_filename.rsplit('.')[0] + '_' + 'p' + str(int(percentile_rank)) + '.csv', 'w') as out_file:
                 for key, value in all_pings.items():
-                    out_file.write(source_dc_name + ',' + key + ',' + str(int(numpy.percentile(value, percentile_rank))) + '\n')
+                    if len(value) >= 10: # at least 10 measurements
+                        out_file.write(source_dc_name + ',' + key + ',' + str(int(numpy.percentile(value, percentile_rank))) + '\n')
                     
 def transpose(i, o=None, d=','):
     f = open(i, 'r')
